@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
-  entry: './assets/js/index.js',
+  entry: './assets/js/index.jsx',
   watch: true,
   watchOptions: {
     aggregateTimeout: 300,
