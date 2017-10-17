@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
-  entry: './assets/js/index.jsx',
+  entry: './client/index.jsx',
   watch: true,
   watchOptions: {
     aggregateTimeout: 300,
@@ -44,9 +44,13 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader'
-        ]
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'images/',
+            publicPath: 'static/bundles/',
+          }
+        },
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
