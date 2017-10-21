@@ -10,8 +10,9 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Login from './components/Login';
 import Main from './components/Main';
-import loginBg from '../assets/images/loginbg.jpg';
-
+import AppBar from './components/AppBar';
+import loginBg from '../assets/images/loginbg.png';
+import mainbg from '../assets/images/mainbg.jpg';
 
 const theme = createMuiTheme({
     palette: {
@@ -28,7 +29,7 @@ const styles = theme => ({
     background: {
         repeat: 'no-repeat',
         position: 'center center fixed',
-        size: 'contain',
+        size: 'auto',
     },
     height: '100%',
   },
@@ -61,6 +62,30 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+  },
+  AppBarContainer: {
+      height: '100%',
+  },
+  MainPage: {
+    height: '100%',
+    backgroundImage: `url(${mainbg})`,
+    background: {
+        repeat: 'no-repeat',
+        position: 'center center fixed',
+        size: 'cover',
+    }
+  },
+  MainPageColumn: {
+      height: '100%',
+  },
+  Content: {
+    height: '100%',
+  },
+  Paper: {
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginRight: 8,
+    marginLeft: 8,
   },
 });
 
@@ -115,7 +140,12 @@ class App extends React.Component {
                 <Login classes={classes} handleChange={this.handleChange} onSubmit={this.onSubmit} username={username} password={password} token={token} loggedIn={loggedIn} />
             );
         } else {
-            return <Main token={ token } classes={classes} />
+            return (
+            <div className={classes.AppBarContainer}>
+                <AppBar />
+                <Main token={ token } classes={ classes } />
+            </div>
+        );
         }
     }
 }
