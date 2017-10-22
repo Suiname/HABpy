@@ -27,7 +27,7 @@ const MainPage = (props) => {
                 </Paper>
             </Grid>
             <Grid item xs={12} lg={4} className='right'>
-            <Paper className={classes.Paper} elevation={4}>
+                <Paper className={classes.Paper} elevation={4}>
                     <Typography type="headline" component="h3" align="center">
                         Past League History
                     </Typography>

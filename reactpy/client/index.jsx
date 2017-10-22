@@ -13,6 +13,7 @@ import Main from './components/Main';
 import AppBar from './components/AppBar';
 import loginBg from '../assets/images/loginbg.png';
 import mainbg from '../assets/images/mainbg.jpg';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 const theme = createMuiTheme({
     palette: {
@@ -90,8 +91,9 @@ const styles = theme => ({
 });
 
 class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log('props: ', props);
         this.state = { username: '', password: '', token: '', loggedIn: false };
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -135,24 +137,35 @@ class App extends React.Component {
     render() {
         const { classes } = this.props;
         const { loggedIn, token, username, password } = this.state;
-        if (!loggedIn) {
-            return(
-                <Login classes={classes} handleChange={this.handleChange} onSubmit={this.onSubmit} username={username} password={password} token={token} loggedIn={loggedIn} />
-            );
-        } else {
-            return (
-            <div className={classes.AppBarContainer}>
-                <AppBar />
-                <Main token={ token } classes={ classes } />
-            </div>
+        return(
+            <Switch>
+                <Route exact path='/' render={(props) => ( loggedIn ?
+                    <Redirect to="/main"/> :
+                    <Login classes={classes} handleChange={this.handleChange} onSubmit={this.onSubmit} username={username} password={password} token={token} loggedIn={loggedIn} />
+                )}/>
+                <Route path='/main' render={ (props) => (
+                    <MainPage classes={classes} token={token} />
+                )}/>
+            </Switch>
         );
-        }
     }
 }
+
+const MainPage = (props) => {
+    const { token, classes } = props;
+    return (
+        <div className={classes.AppBarContainer}>
+            <AppBar />
+            <Main token={ token } classes={ classes } />
+        </div>
+    );
+};
 
 const StyledApp = withStyles(styles)(App)
 
 ReactDOM.render(<MuiThemeProvider theme={theme}>
-        <StyledApp/>
+        <BrowserRouter>
+            <StyledApp/>
+        </BrowserRouter>
     </MuiThemeProvider>, 
     document.getElementById('container'))
